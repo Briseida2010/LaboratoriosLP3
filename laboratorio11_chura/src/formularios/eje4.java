@@ -6,6 +6,8 @@
 
 package formularios;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author BEPIS
@@ -33,13 +35,13 @@ public class eje4 extends javax.swing.JFrame {
         txtnumero = new javax.swing.JTextField();
         btnvisualizar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        txtresultado3 = new javax.swing.JTextArea();
+        txtResultadoDerecha = new javax.swing.JTextArea();
         btnanterior = new javax.swing.JButton();
         btnsiguiente = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txtresultado2 = new javax.swing.JTextArea();
+        txtResultadoCentrado = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        txtresultado1 = new javax.swing.JTextArea();
+        txtResultadoIzquierda = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -49,7 +51,7 @@ public class eje4 extends javax.swing.JFrame {
 
         jLabel2.setText("Ingrese un numero");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, -1, -1));
-        getContentPane().add(txtnumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, 110, -1));
+        getContentPane().add(txtnumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 110, -1));
 
         btnvisualizar.setText("visualizar");
         btnvisualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -59,11 +61,11 @@ public class eje4 extends javax.swing.JFrame {
         });
         getContentPane().add(btnvisualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 80, -1));
 
-        txtresultado3.setColumns(20);
-        txtresultado3.setRows(5);
-        jScrollPane2.setViewportView(txtresultado3);
+        txtResultadoDerecha.setColumns(20);
+        txtResultadoDerecha.setRows(5);
+        jScrollPane2.setViewportView(txtResultadoDerecha);
 
-        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 150, 160, 140));
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 150, 160, 140));
 
         btnanterior.setText("Anterior");
         btnanterior.addActionListener(new java.awt.event.ActionListener() {
@@ -81,15 +83,15 @@ public class eje4 extends javax.swing.JFrame {
         });
         getContentPane().add(btnsiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 80, -1));
 
-        txtresultado2.setColumns(20);
-        txtresultado2.setRows(5);
-        jScrollPane1.setViewportView(txtresultado2);
+        txtResultadoCentrado.setColumns(20);
+        txtResultadoCentrado.setRows(5);
+        jScrollPane1.setViewportView(txtResultadoCentrado);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, 160, 140));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, 160, 140));
 
-        txtresultado1.setColumns(20);
-        txtresultado1.setRows(5);
-        jScrollPane3.setViewportView(txtresultado1);
+        txtResultadoIzquierda.setColumns(20);
+        txtResultadoIzquierda.setRows(5);
+        jScrollPane3.setViewportView(txtResultadoIzquierda);
 
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 160, 140));
 
@@ -97,34 +99,70 @@ public class eje4 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnvisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvisualizarActionPerformed
-        int numero, i,j;
-        String caracter="",simbolo="*";
-        
-        txtresultado1.setText("");
-        numero=Integer.parseInt(txtnumero.getText());
-        
-        for(i=1;i<=numero;i++){
-        caracter=caracter + simbolo;
-        txtresultado1.append(caracter+"\n");
-        }
-        
-        txtresultado2.setText("");
-        numero=Integer.parseInt(txtnumero.getText());
-         for(j=1;j<=numero;j--){
-        caracter=caracter + simbolo;
-        txtresultado2.append(caracter+"\n");
-        }
-         
-         txtresultado3.setText("");
-        numero=Integer.parseInt(txtnumero.getText());
-          for(i=1;i<=numero;i++){
-        caracter=caracter + simbolo;
-        txtresultado3.append(caracter+"\n");
-        }
-         
-           
+       generarResultadoIzquierda(); 
+       generarResultadoCentral();
+       generarResultadoDerecha();
     }//GEN-LAST:event_btnvisualizarActionPerformed
-
+    
+    private void generarResultadoIzquierda(){
+        int numero = Integer.parseInt(txtnumero.getText());
+        String saltoLinea = "\n";
+        String lineas = "";
+        for(int i=1;i<=numero;i++){
+            String asteriscos = generarAsteriscos(i);
+            lineas += asteriscos+saltoLinea;
+        }
+        txtResultadoIzquierda.setText(lineas);
+    }
+    
+    private void generarResultadoCentral(){
+        int numero = Integer.parseInt(txtnumero.getText());
+        String saltoLinea = "\n";
+        String lineas = "";
+        int cantidadAsteriscos = 1;
+        int cantidadEspacios = numero-1;
+        for(int i=1;i<=numero;i++){
+            String espacios = generarEspacios(cantidadEspacios);
+            String asteriscos = generarAsteriscos(cantidadAsteriscos);
+            cantidadEspacios -= 1;
+            cantidadAsteriscos += 2;   
+            lineas += espacios+asteriscos+saltoLinea;
+        }
+        txtResultadoCentrado.setText(lineas);
+    }
+    
+    private String generarAsteriscos(int cantidadAsteriscos){
+        String asteriscos = "";
+        for(int k=1;k<=cantidadAsteriscos;k++){
+                asteriscos += "*";
+            } 
+        return asteriscos;
+    }
+    
+    private String generarEspacios(int cantidadEspacios){
+        String espacios = "";
+        for(int j=1;j<=cantidadEspacios;j++){
+                espacios += " ";
+            }
+        return espacios;
+    }
+    
+    private void generarResultadoDerecha(){
+        int numero = Integer.parseInt(txtnumero.getText());
+        String saltoLinea = "\n";
+        String lineas = "";
+        int cantidadAsteriscos = 1;
+        int cantidadEspacios = numero-1;
+        for(int i=1;i<=numero;i++){
+            String espacios = generarEspacios(cantidadEspacios);
+            String asteriscos = generarAsteriscos(cantidadAsteriscos);
+            cantidadEspacios -= 1;
+            cantidadAsteriscos +=1;
+            lineas += espacios+asteriscos+saltoLinea;
+        }
+        txtResultadoDerecha.setText(lineas);
+    }
+    
     private void btnanteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnanteriorActionPerformed
        this.dispose();
        eje3 j3 = new eje3();
@@ -184,9 +222,9 @@ public class eje4 extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea txtResultadoCentrado;
+    private javax.swing.JTextArea txtResultadoDerecha;
+    private javax.swing.JTextArea txtResultadoIzquierda;
     private javax.swing.JTextField txtnumero;
-    private javax.swing.JTextArea txtresultado1;
-    private javax.swing.JTextArea txtresultado2;
-    private javax.swing.JTextArea txtresultado3;
     // End of variables declaration//GEN-END:variables
 }
